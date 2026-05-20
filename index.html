@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EastTNWXNet - East Tennessee Weather Network</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1 class="logo">🌤️ EastTNWXNet</h1>
+                    <p class="tagline">East Tennessee Weather Network</p>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#radar">Radar</a></li>
+                        <li><a href="#forecast">Forecast</a></li>
+                        <li><a href="#discussion">NOAA Discussion</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section with Current Conditions -->
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="breaking-banner">
+                    <span class="breaking-label">WEATHER UPDATE</span>
+                    <span class="breaking-time" id="updateTime">Last Updated: Just now</span>
+                </div>
+                
+                <div class="current-conditions-grid">
+                    <!-- Current Conditions Card -->
+                    <div class="conditions-card main-card">
+                        <div class="station-header">
+                            <h2>Current Conditions - Knoxville, TN</h2>
+                            <p class="station-id">Lat: 35.96°N | Lon: -84.13°W</p>
+                        </div>
+                        
+                        <div class="conditions-display">
+                            <div class="temp-section">
+                                <div class="current-temp" id="currentTemp">72°</div>
+                                <div class="weather-desc" id="weatherDesc">Partly Cloudy</div>
+                            </div>
+                            
+                            <div class="weather-icon" id="weatherIcon">⛅</div>
+                        </div>
+                        
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Feels Like</span>
+                                <span class="detail-value" id="feelsLike">70°</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Humidity</span>
+                                <span class="detail-value" id="humidity">65%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Wind Speed</span>
+                                <span class="detail-value" id="windSpeed">12 mph</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Wind Direction</span>
+                                <span class="detail-value" id="windDir">NW</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Pressure</span>
+                                <span class="detail-value" id="pressure">30.12"</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Dew Point</span>
+                                <span class="detail-value" id="dewPoint">58°</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Visibility</span>
+                                <span class="detail-value" id="visibility">10 mi</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">UV Index</span>
+                                <span class="detail-value" id="uvIndex">5</span>
+                            </div>
+                        </div>
+
+                        <div class="alerts-section" id="alertsSection" style="display: none;">
+                            <h3>⚠️ Active Alerts</h3>
+                            <div id="alertsList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Weather Radar -->
+                    <div id="radar" class="radar-card">
+                        <div class="card-header">
+                            <h2>Live Weather Radar</h2>
+                            <span class="radar-timestamp" id="radarTime">Live</span>
+                        </div>
+                        <div id="radarContainer" class="radar-container">
+                            <iframe 
+                                width="100%" 
+                                height="400" 
+                                src="https://embed.windy.com/embed2.html?lat=35.96&lon=-84.13&detailLat=35.96&detailLon=-84.13&metricRain=mm&metricTemp=°F&metricWind=mph&zoom=8&overlay=radar&product=ecmwf&level=surface&listType=openweather&cellType=nowcast&legal=show&hideShareMenu=&mode=portrait&menu=%22" 
+                                frameborder="0" 
+                                allow="accelerometer; ambient-light-sensor; autoplay; battery; camera; document-domain; encrypted-media; execution-while-not-focused; execution-while-out-of-focus; fullscreen; geolocation; gyroscope; magnetometer; microphone; midi; payment; picture-in-picture; publickey-credentials-get; sync-xhr; usb; xr-spatial-tracking"
+                                sandbox="allow-same-origin allow-scripts allow-popups allow-presentation allow-popups-to-escape-sandbox">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7-Day Forecast -->
+        <section id="forecast" class="forecast-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>7-Day Forecast</h2>
+                    <p>Extended Outlook for East Tennessee</p>
+                </div>
+                
+                <div class="forecast-grid" id="forecastGrid">
+                    <!-- Forecast cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- NOAA Forecast Discussion -->
+        <section id="discussion" class="discussion-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>NOAA Forecast Discussion</h2>
+                    <p>National Weather Service - Morristown, TN</p>
+                </div>
+                
+                <div class="discussion-card">
+                    <div class="discussion-header">
+                        <span class="discussion-source">National Weather Service</span>
+                        <span class="discussion-time" id="discussionTime">Loading...</span>
+                    </div>
+                    
+                    <div class="discussion-content" id="discussionContent">
+                        <p>Loading NOAA Forecast Discussion...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>About EastTNWXNet</h2>
+                <p>EastTNWXNet is your dedicated source for hyper-local weather information covering East Tennessee. 
+                   We provide real-time weather data, radar imagery, and detailed forecasts to keep you informed and safe.</p>
+                <p><strong>Data Sources:</strong> Open-Meteo API for current conditions and forecasts, Windy.com for radar, and NOAA for official forecast discussions.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 EastTNWXNet. All rights reserved. | Powered by Open-Meteo & NOAA</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
